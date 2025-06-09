@@ -44,7 +44,7 @@ const HomePage = () => {
                         </div>
                         <div className="col-lg-6 d-none d-lg-block">
                             <img
-                                src="/images/artisan-hero.svg"
+                                src="/images/17403.jpg"
                                 alt="Artisans"
                                 className="img-fluid"
                                 onError={(e) => {
@@ -52,6 +52,9 @@ const HomePage = () => {
                                     e.target.src = 'https://placehold.co/600x400/007bff/white?text=Artisans';
                                 }}
                             />
+                            <div className="text-end mt-2 small">
+                                <a href="http://www.freepik.com" className="text-white text-decoration-underline">Designed by macrovector / Freepik</a>
+                            </div>
                         </div>
                     </div>
                 </div>
