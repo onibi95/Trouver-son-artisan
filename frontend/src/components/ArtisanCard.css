@@ -1,0 +1,37 @@
+.hover-shadow {
+    transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(56, 64, 80, 0.1) !important;
+}
+
+.card-title {
+    color: #00497c;
+}
+
+.card .btn {
+    transition: all 0.2s ease;
+}
+
+.card:hover .btn-outline-primary {
+    background-color: #0074c7;
+    color: white;
+}
+
+.text-warning {
+    color: #cd2c2e !important;
+}
+
+.text-primary {
+    color: #0074c7 !important;
+}
+
+.bi-tools {
+    color: #0074c7;
+}
+
+.bi-geo-alt {
+    color: #82b864;
+}

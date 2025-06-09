@@ -1,0 +1,135 @@
+// Import fonts
+@import "fonts";
+
+// Import custom variables
+@import "variables";
+
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// Import Bootstrap Icons
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
+
+// Custom styles
+body {
+    font-family: 'Graphik', sans-serif;
+    background-color: $light-blue;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Graphik', sans-serif;
+    font-weight: 500;
+}
+
+// Navigation
+.navbar {
+    box-shadow: 0 2px 5px rgba($blue-gray, 0.3);
+    backdrop-filter: blur(5px);
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+
+    .navbar-brand {
+        color: white;
+    }
+
+    .nav-link {
+        color: rgba(255, 255, 255, 0.75);
+
+        &:hover,
+        &:focus {
+            color: white;
+        }
+
+        &.active {
+            color: white;
+            font-weight: 500;
+        }
+    }
+}
+
+// Hero section
+.hero {
+    background-color: $blue !important;
+    background: linear-gradient(135deg, $blue 0%, $dark-blue 100%);
+}
+
+// Cards
+.card {
+    border-color: rgba($blue-gray, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 5px 15px rgba($blue-gray, 0.1);
+    }
+
+    .card-title {
+        color: $dark-blue;
+    }
+}
+
+// Step cards in HowToFindArtisan component
+.how-to-find {
+    .card {
+        &:hover {
+            transform: translateY(-5px);
+        }
+    }
+
+    .step-number {
+        .badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            background-color: $blue !important;
+        }
+    }
+}
+
+// Featured artisans section
+.featured-artisans {
+    background-color: white;
+}
+
+// Categories section
+.categories {
+    background-color: $light-blue !important;
+}
+
+// Buttons
+.btn-primary {
+    background-color: $blue;
+    border-color: $blue;
+
+    &:hover,
+    &:focus {
+        background-color: darken($blue, 10%);
+        border-color: darken($blue, 10%);
+    }
+}
+
+.btn-outline-primary {
+    color: $blue;
+    border-color: $blue;
+
+    &:hover,
+    &:focus {
+        background-color: $blue;
+        border-color: $blue;
+    }
+}
+
+// Footer
+footer {
+    background-color: $blue-gray !important;
+    backdrop-filter: blur(5px);
+}
+
+.container {
+    margin-top: 2rem;
+}

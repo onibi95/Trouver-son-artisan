@@ -1,0 +1,121 @@
+/* Palette de couleurs */
+:root {
+    --light-blue: #f1f8fc;
+    --blue: #0074c7;
+    --dark-blue: #00497c;
+    --blue-gray: #384050;
+    --blue-gray-transparent: rgba(56, 64, 80, 0.85);
+    --red: #cd2c2e;
+    --green: #82b864;
+}
+
+/* Couleurs Bootstrap personnalisées */
+.bg-primary {
+    background-color: var(--blue) !important;
+}
+
+.bg-secondary {
+    background-color: var(--blue-gray) !important;
+}
+
+.bg-secondary-transparent {
+    background-color: var(--blue-gray-transparent) !important;
+}
+
+.bg-success {
+    background-color: var(--green) !important;
+}
+
+.bg-danger {
+    background-color: var(--red) !important;
+}
+
+.bg-light {
+    background-color: var(--light-blue) !important;
+}
+
+.bg-dark {
+    background-color: var(--dark-blue) !important;
+}
+
+/* Textes */
+.text-primary {
+    color: var(--blue) !important;
+}
+
+.text-secondary {
+    color: var(--blue-gray) !important;
+}
+
+.text-success {
+    color: var(--green) !important;
+}
+
+.text-danger {
+    color: var(--red) !important;
+}
+
+.text-warning {
+    color: var(--red) !important;
+}
+
+.text-muted {
+    color: rgba(56, 64, 80, 0.7) !important;
+}
+
+/* Boutons */
+.btn-primary {
+    background-color: var(--blue) !important;
+    border-color: var(--blue) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--dark-blue) !important;
+    border-color: var(--dark-blue) !important;
+}
+
+.btn-outline-primary {
+    color: var(--blue) !important;
+    border-color: var(--blue) !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background-color: var(--blue) !important;
+    color: white !important;
+}
+
+.btn-success {
+    background-color: var(--green) !important;
+    border-color: var(--green) !important;
+}
+
+.btn-danger {
+    background-color: var(--red) !important;
+    border-color: var(--red) !important;
+}
+
+/* Liens */
+a {
+    color: var(--blue);
+}
+
+a:hover {
+    color: var(--dark-blue);
+}
+
+/* Cartes */
+.card-title {
+    color: var(--dark-blue) !important;
+}
+
+/* Hero section */
+.hero {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--dark-blue) 100%) !important;
+}
+
+/* Footer */
+footer {
+    background-color: var(--blue-gray) !important;
+}
