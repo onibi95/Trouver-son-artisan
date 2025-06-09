@@ -6,6 +6,7 @@ import ArtisansPage from './pages/ArtisansPage';
 import ArtisanDetailPage from './pages/ArtisanDetailPage';
 import Footer from './components/Footer';
 import SEO from './components/SEO';
+import UnderConstruction from './components/UnderConstruction';
 
 // Composant pour les pages simples avec SEO intégré
 const SimplePage = ({ title, description, children }) => {
@@ -18,15 +19,6 @@ const SimplePage = ({ title, description, children }) => {
 };
 
 // Pages temporaires
-const ContactPage = () => (
-  <SimplePage
-    title="Contact"
-    description="Contactez-nous pour toute question concernant notre plateforme d'artisans ou pour signaler un problème."
-  >
-    <h1>Page contact (à implémenter)</h1>
-  </SimplePage>
-);
-
 const NotFoundPage = () => (
   <SimplePage
     title="Page non trouvée"
@@ -53,7 +45,13 @@ function App() {
             {/* Routes futures */}
             <Route path="/categorie/:nom" element={<ArtisansPage />} />
             <Route path="/artisan/:id" element={<ArtisanDetailPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+
+            {/* Pages légales */}
+            <Route path="/mentions-legales" element={<UnderConstruction title="Mentions légales" />} />
+            <Route path="/donnees-personnelles" element={<UnderConstruction title="Données personnelles" />} />
+            <Route path="/accessibilite" element={<UnderConstruction title="Accessibilité" />} />
+            <Route path="/cgv" element={<UnderConstruction title="CGV" />} />
+
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
