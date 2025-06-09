@@ -136,15 +136,6 @@ const Navbar = () => {
                                 Tous les artisans
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link
-                                className={`nav-link ${location.pathname === '/contact' ? 'active' : ''}`}
-                                to="/contact"
-                                onClick={handleNavLinkClick}
-                            >
-                                Contact
-                            </Link>
-                        </li>
                     </ul>
                 </div>
             </div>

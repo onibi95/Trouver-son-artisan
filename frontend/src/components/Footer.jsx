@@ -26,7 +26,6 @@ const Footer = () => {
                             <li className="mb-2"><a href="/" className="text-decoration-none text-white-50">Accueil</a></li>
                             <li className="mb-2"><a href="/artisans" className="text-decoration-none text-white-50">Artisans</a></li>
                             <li className="mb-2"><a href="/categories" className="text-decoration-none text-white-50">Catégories</a></li>
-                            <li className="mb-2"><a href="/contact" className="text-decoration-none text-white-50">Contact</a></li>
                         </ul>
                     </div>
 
