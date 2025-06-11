@@ -25,15 +25,18 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Import des modèles
-db.products = require("./product.model.js")(sequelize, Sequelize);
 db.artisans = require("./artisan.model.js")(sequelize, Sequelize);
-// db.categories = require("./category.model.js")(sequelize, Sequelize);
+db.categories = require("./category.model.js")(sequelize, Sequelize);
 
-// Relations entre les modèles
-// db.categories.hasMany(db.products, { as: "products" });
-// db.products.belongsTo(db.categories, {
-//   foreignKey: "categoryId",
-//   as: "category",
-// });
+// Définition des associations
+db.categories.hasMany(db.artisans, {
+    foreignKey: 'categoryId',
+    as: 'artisans'
+});
+
+db.artisans.belongsTo(db.categories, {
+    foreignKey: 'categoryId',
+    as: 'category'
+});
 
 module.exports = db; 

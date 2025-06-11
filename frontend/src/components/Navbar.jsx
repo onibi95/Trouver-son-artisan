@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { getCategories, searchArtisansByName } from '../services/api';
+import { getCategories } from '../services/api';
+import { useNavigate } from "react-router-dom";
+
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -8,6 +10,7 @@ const Navbar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     // Récupérer les catégories depuis la "base de données"
     useEffect(() => {
@@ -27,21 +30,8 @@ const Navbar = () => {
         e.preventDefault();
         if (!searchTerm.trim()) return;
 
-        setIsLoading(true);
-        try {
-            // Dans une application réelle, on redirigerait vers une page de résultats
-            const results = await searchArtisansByName(searchTerm);
-            console.log("Résultats de recherche:", results);
-
-            // Pour l'instant, affichons simplement une alerte avec le nombre de résultats
-            alert(`${results.length} artisan(s) trouvé(s) pour "${searchTerm}"`);
-        } catch (error) {
-            console.error("Erreur lors de la recherche:", error);
-            alert("Une erreur est survenue lors de la recherche");
-        } finally {
-            setIsLoading(false);
-            setIsOpen(false); // Ferme le menu après recherche sur mobile
-        }
+        navigate(`/artisans?q=${searchTerm}`);
+            
     };
 
     // Fermer le menu au clic sur un lien

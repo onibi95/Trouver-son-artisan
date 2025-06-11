@@ -34,7 +34,7 @@ const importCsvData = async () => {
         parse(fileContent, {
             delimiter: ';',
             columns: true,
-            trim: true,
+            trim: false,
             skip_empty_lines: true
         }, async (err, records) => {
             if (err) {
@@ -44,22 +44,60 @@ const importCsvData = async () => {
 
             console.log(`${records.length} artisans trouvés dans le CSV.`);
 
+
             try {
                 // Supprimer toutes les données existantes
                 await Artisan.destroy({ truncate: true, cascade: true });
 
-                // Transformer et insérer les données
-                const artisans = records.map(record => ({
-                    nom: record.Nom,
-                    specialite: record.Spécialité,
-                    note: parseFloat(record.Note),
-                    ville: record.Ville,
-                    aPropos: record['A propos'],
-                    email: record.Email,
-                    siteWeb: record['Site Web'],
-                    categorie: record.Catégorie,
-                    top: parseBoolean(record.Top)
-                }));
+                // Transformer et insérer les données de manière dynamique
+                const artisans = records.map(record => {
+                    const artisan = {};
+                    let test = false;
+                    Object.keys(record).forEach(key => {
+                        const value = record[key];
+
+                        // Mapping dynamique des clés vers les noms de propriétés de la base
+                        switch (key) {
+                            case 'Nom':
+                              test = true;
+                                artisan.nom = value;
+                                break;
+                            case 'Spécialité':
+                                artisan.specialite = value;
+                                break;
+                            case 'Note':
+                                artisan.note = parseFloat(value);
+                                break;
+                            case 'Ville':
+                                artisan.ville = value;
+                                break;
+                            case 'A propos':
+                                artisan.aPropos = value;
+                                break;
+                            case 'Email':
+                                artisan.email = value;
+                                break;
+                            case 'Site Web':
+                                artisan.siteWeb = value;
+                                break;
+                            case 'Catégorie':
+                                artisan.categorie = value;
+                                break;
+                            case 'Top':
+                                artisan.top = parseBoolean(value);
+                                break;
+                            default:
+                              break;
+                        }
+                    });
+
+
+                    
+                    return artisan;
+                });
+
+
+
 
                 await Artisan.bulkCreate(artisans);
                 console.log('Importation CSV terminée avec succès.');

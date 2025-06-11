@@ -22,12 +22,24 @@ module.exports = (sequelize, DataTypes) => {
         siteWeb: {
             type: DataTypes.STRING
         },
-        categorie: {
-            type: DataTypes.STRING
+        categoryId: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'categories',
+                key: 'id'
+            }
         },
         top: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
+        },
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW
         }
     });
 

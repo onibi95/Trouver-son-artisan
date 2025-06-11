@@ -19,16 +19,25 @@ const ArtisansPage = () => {
     const [selectedVille, setSelectedVille] = useState('');
     const [pageTitle, setPageTitle] = useState('Tous nos artisans');
     const [seoDescription, setSeoDescription] = useState('');
+  
+    useEffect(() => {
+      setSearchTerm(new URLSearchParams(location.search).get('q') || '');
+      console.log(searchTerm);
+    }, [location.search]);
+    
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                let artisansData;
+                let artisansData = [];
+              
 
                 // Si nous sommes sur une page de catégorie
                 if (nom) {
+                  console.log("search name");
                     artisansData = await getArtisansByCategory(nom);
+
                     setSelectedCategory(artisansData[0]?.categorie || '');
 
                     // Première lettre en majuscule et le reste en minuscule
@@ -37,12 +46,15 @@ const ArtisansPage = () => {
                     setPageTitle(title);
                     setSeoDescription(`Découvrez les meilleurs artisans spécialisés en ${formattedCategoryName} près de chez vous. Consultez leurs profils, spécialités et coordonnées.`);
                 } else {
+                    console.log("search all");
                     artisansData = await getArtisans();
+                    console.log("search all done");
                     setPageTitle('Tous nos artisans');
                     setSeoDescription('Explorez notre répertoire complet d\'artisans qualifiés dans différents domaines. Filtrez par spécialité, localisation ou note pour trouver le professionnel idéal pour votre projet.');
                 }
 
                 const categoriesData = await getCategories();
+
 
                 setArtisans(artisansData);
                 setCategories(categoriesData);
@@ -63,6 +75,7 @@ const ArtisansPage = () => {
     // Filtrer les artisans
     const filteredArtisans = artisans.filter(artisan => {
         const matchesSearch = searchTerm === '' ||
+        
             artisan.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
             artisan.specialite.toLowerCase().includes(searchTerm.toLowerCase());
 

@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 
 // Import routes
 require('./src/routes/artisan.routes')(app);
-require('./src/routes/product.routes')(app);
+require('./src/routes/auth.routes')(app);
 
 // Set port and start server
 const PORT = process.env.PORT || 5000;

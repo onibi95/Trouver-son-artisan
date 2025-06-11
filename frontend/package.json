@@ -4,9 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "copy-fonts": "node scripts/copy-fonts.js",
-    "predev": "npm run copy-fonts",
-    "prebuild": "npm run copy-fonts",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",

@@ -29,23 +29,26 @@ Cette application web met en relation les particuliers avec des artisans qualifi
 ## 🛠 Technologies utilisées
 
 ### Frontend
-- React.js 19.1
-- React Router 7.6
-- Bootstrap 5.3
-- SASS
-- Vite.js
+- React.js 19.1.0
+- React Router 7.6.2
+- Bootstrap 5.3.6
+- SASS 1.89.1
+- Vite.js 6.3.5
+- ESLint pour la qualité du code
 
 ### Backend
-- Node.js
-- Express.js 5.1
-- MySQL (avec Sequelize ORM)
-- API RESTful
+- Node.js avec Nodemon pour le développement
+- Express.js 5.1.0
+- MySQL avec Sequelize ORM 6.37.7
+- Authentification JWT avec bcryptjs
+- API RESTful avec support CORS
+- CSV-Parse pour l'importation de données
 
 ## 💻 Installation
 
 ### Prérequis
 - Node.js (v18+)
-- npm ou yarn
+- npm
 - MySQL (pour la base de données)
 
 ### Étapes d'installation
@@ -82,22 +85,28 @@ artisans/
 │   │   ├── components/     # Composants React réutilisables
 │   │   ├── pages/          # Pages principales
 │   │   ├── services/       # Services API et utilitaires
-│   │   ├── styles/         # Fichiers SCSS
-│   │   └── assets/         # Images et ressources
+│   │   └── styles/         # Fichiers SCSS avec variables
 │   │
 │   ├── package.json        # Dépendances frontend
-│   └── vite.config.js      # Configuration Vite
+│   ├── vite.config.js      # Configuration Vite avec alias et SCSS
+│   └── eslint.config.js    # Configuration ESLint
 │
 ├── backend/                # Serveur API Express
 │   ├── src/
 │   │   ├── controllers/    # Contrôleurs
-│   │   ├── models/         # Modèles de données
-│   │   └── routes/         # Routes API
+│   │   ├── models/         # Modèles Sequelize
+│   │   ├── routes/         # Routes API
+│   │   ├── config/         # Configuration de l'application
+│   │   ├── docs/           # Documentation API
+│   │   └── utils/          # Utilitaires
 │   │
 │   ├── server.js           # Point d'entrée du serveur
 │   └── package.json        # Dépendances backend
 │
-└── data/                   # Données et scripts d'importation
+├── data/                   # Données CSV pour l'importation
+│   └── data.csv            # Fichier de données des artisans
+│
+└── .gitignore             # Fichiers ignorés par Git
 ```
 
 ## 🤝 Comment contribuer
