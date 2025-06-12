@@ -21,8 +21,9 @@ const ArtisansPage = () => {
     const [seoDescription, setSeoDescription] = useState('');
   
     useEffect(() => {
-      setSearchTerm(new URLSearchParams(location.search).get('q') || '');
-      console.log(searchTerm);
+      const searchQuery = new URLSearchParams(location.search).get('q') || '';
+      setSearchTerm(searchQuery);
+      console.log('[ARTISANS-PAGE] Search term from URL:', searchQuery);
     }, [location.search]);
     
 
@@ -35,7 +36,7 @@ const ArtisansPage = () => {
 
                 // Si nous sommes sur une page de catégorie
                 if (nom) {
-                  console.log("search name");
+                    console.log('[ARTISANS-PAGE] Loading artisans by category:', nom);
                     artisansData = await getArtisansByCategory(nom);
 
                     setSelectedCategory(artisansData[0]?.categorie || '');
@@ -46,20 +47,19 @@ const ArtisansPage = () => {
                     setPageTitle(title);
                     setSeoDescription(`Découvrez les meilleurs artisans spécialisés en ${formattedCategoryName} près de chez vous. Consultez leurs profils, spécialités et coordonnées.`);
                 } else {
-                    console.log("search all");
+                    console.log('[ARTISANS-PAGE] Loading all artisans');
                     artisansData = await getArtisans();
-                    console.log("search all done");
                     setPageTitle('Tous nos artisans');
                     setSeoDescription('Explorez notre répertoire complet d\'artisans qualifiés dans différents domaines. Filtrez par spécialité, localisation ou note pour trouver le professionnel idéal pour votre projet.');
                 }
 
                 const categoriesData = await getCategories();
 
-
+                console.log('[ARTISANS-PAGE] Loaded', artisansData.length, 'artisans and', categoriesData.length, 'categories');
                 setArtisans(artisansData);
                 setCategories(categoriesData);
             } catch (err) {
-                console.error('Erreur lors du chargement des données:', err);
+                console.error('[ARTISANS-PAGE] Error loading data:', err.message);
                 setError('Une erreur est survenue lors du chargement des artisans.');
             } finally {
                 setLoading(false);
@@ -90,6 +90,7 @@ const ArtisansPage = () => {
 
     // Réinitialiser tous les filtres
     const resetFilters = () => {
+        console.log('[ARTISANS-PAGE] Resetting all filters');
         setSearchTerm('');
         setSelectedCategory(nom ? artisans[0]?.categorie || '' : '');
         setSelectedVille('');

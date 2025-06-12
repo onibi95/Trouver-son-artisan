@@ -10,6 +10,7 @@ const API_BASE_URL = 'http://localhost:5000/api';
 // Récupérer le token de sécurité au chargement de la page
 export const initializeApiToken = async () => {
     try {
+        console.log('[API] Initializing API token...');
         // Vérifier si un token est déjà stocké localement
         const storedToken = localStorage.getItem('api_token');
         
@@ -18,10 +19,11 @@ export const initializeApiToken = async () => {
             const isValid = await validateToken(storedToken);
             if (isValid) {
                 apiToken = storedToken;
-                console.log('Token récupéré depuis le stockage local');
+                console.log('[API] Token retrieved from local storage');
                 return apiToken;
             } else {
                 localStorage.removeItem('api_token');
+                console.log('[API] Stored token invalid, removed from storage');
             }
         }
 
@@ -42,13 +44,13 @@ export const initializeApiToken = async () => {
         if (data.success && data.token) {
             apiToken = data.token;
             localStorage.setItem('api_token', apiToken);
-            console.log('Nouveau token généré et stocké');
+            console.log('[API] New token generated and stored');
             return apiToken;
         } else {
             throw new Error('Token non reçu du serveur');
         }
     } catch (error) {
-        console.error('Erreur lors de l\'initialisation du token:', error);
+        console.error('[API] Error initializing token:', error.message);
         throw error;
     }
 };
@@ -64,7 +66,7 @@ const validateToken = async (token) => {
         });
         return response.ok;
     } catch (error) {
-        console.error('Erreur lors de la validation du token:', error);
+        console.error('[API] Error validating token:', error.message);
         return false;
     }
 };
@@ -91,6 +93,7 @@ const authenticatedFetch = async (url, options = {}) => {
 
         // Si le token a expiré, en générer un nouveau
         if (response.status === 401) {
+            console.log('[API] Token expired, refreshing...');
             localStorage.removeItem('api_token');
             apiToken = null;
             await initializeApiToken();
@@ -107,7 +110,7 @@ const authenticatedFetch = async (url, options = {}) => {
 
         return response;
     } catch (error) {
-        console.error('Erreur lors de la requête authentifiée:', error);
+        console.error('[API] Authenticated fetch error:', error.message);
         throw error;
     }
 };
@@ -115,13 +118,17 @@ const authenticatedFetch = async (url, options = {}) => {
 // Fonction simulant la récupération des artisans depuis l'API
 export const getArtisans = async () => {
     try {
+        console.log('[API] Fetching all artisans');
         const response = await authenticatedFetch(`${API_BASE_URL}/artisans`);
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des artisans');
         }
-        return await response.json();
+        const data = await response.json();
+        console.log('[API] Successfully fetched', data.length, 'artisans');
+        return data;
     } catch (error) {
-        console.error('Erreur getArtisans:', error);
+        console.error('[API] Error fetching artisans:', error.message);
+        console.log('[API] Falling back to mock data');
         // Fallback sur les données mock en cas d'erreur
         return artisansData;
     }
@@ -130,13 +137,17 @@ export const getArtisans = async () => {
 // Récupérer les artisans par catégorie
 export const getArtisansByCategory = async (categoryName) => {
     try {
+        console.log('[API] Fetching artisans by category:', categoryName);
         const response = await authenticatedFetch(`${API_BASE_URL}/artisans/categorie/${categoryName}`);
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des artisans par catégorie');
         }
-        return await response.json();
+        const data = await response.json();
+        console.log('[API] Successfully fetched', data.length, 'artisans for category:', categoryName);
+        return data;
     } catch (error) {
-        console.error('Erreur getArtisansByCategory:', error);
+        console.error('[API] Error fetching artisans by category:', error.message);
+        console.log('[API] Falling back to mock data');
         // Fallback sur les données mock
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -152,13 +163,17 @@ export const getArtisansByCategory = async (categoryName) => {
 // Récupérer les artisans mis en avant (top:true)
 export const getTopArtisans = async () => {
     try {
+        console.log('[API] Fetching top artisans');
         const response = await authenticatedFetch(`${API_BASE_URL}/artisans/top`);
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des top artisans');
         }
-        return await response.json();
+        const data = await response.json();
+        console.log('[API] Successfully fetched', data.length, 'top artisans');
+        return data;
     } catch (error) {
-        console.error('Erreur getTopArtisans:', error);
+        console.error('[API] Error fetching top artisans:', error.message);
+        console.log('[API] Falling back to mock data');
         // Fallback sur les données mock
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -172,13 +187,17 @@ export const getTopArtisans = async () => {
 // Rechercher des artisans par nom
 export const searchArtisansByName = async (searchTerm) => {
     try {
+        console.log('[API] Searching artisans by name:', searchTerm);
         const response = await authenticatedFetch(`${API_BASE_URL}/artisans/search?name=${searchTerm}`);
         if (!response.ok) {
             throw new Error('Erreur lors de la recherche d\'artisans');
         }
-        return await response.json();
+        const data = await response.json();
+        console.log('[API] Successfully found', data.length, 'artisans for search term:', searchTerm);
+        return data;
     } catch (error) {
-        console.error('Erreur searchArtisansByName:', error);
+        console.error('[API] Error searching artisans by name:', error.message);
+        console.log('[API] Falling back to mock data');
         // Fallback sur les données mock
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -194,16 +213,17 @@ export const searchArtisansByName = async (searchTerm) => {
 // Récupérer les catégories d'artisans
 export const getCategories = async () => {
     try {
+        console.log('[API] Fetching categories');
         const response = await authenticatedFetch(`${API_BASE_URL}/categories`);
         const res = await response.json();
-        console.log("response");
-        console.log(res);
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des catégories');
         }
+        console.log('[API] Successfully fetched', res.length, 'categories');
         return res;
     } catch (error) {
-        console.error('Erreur getCategories:', error);
+        console.error('[API] Error fetching categories:', error.message);
+        console.log('[API] Falling back to mock data');
         // Fallback sur les données mock
         return new Promise((resolve) => {
             setTimeout(() => {
