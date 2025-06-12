@@ -1,3 +1,8 @@
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+
 // Configuration de la base de données pour Sequelize
 module.exports = {
     HOST: process.env.DB_HOST || "localhost",

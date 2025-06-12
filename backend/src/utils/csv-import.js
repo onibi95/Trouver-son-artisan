@@ -3,7 +3,7 @@ const path = require('path');
 const { parse } = require('csv-parse');
 const db = require('../models');
 const Artisan = db.artisans;
-
+const Category = db.categories;
 // Fonction pour convertir le format des notes (4,5 -> 4.5)
 const parseFloat = (value) => {
     if (!value) return null;
@@ -96,9 +96,28 @@ const importCsvData = async () => {
                     return artisan;
                 });
 
+                // Extract unique category names
+                const uniqueCategoryNames = new Set();
+                records.forEach(record => {
+                    Object.keys(record).forEach(key => {
+                        const value = record[key];
+                        if (key === 'Catégorie' && value && value.trim() !== '') {
+                            uniqueCategoryNames.add(value.trim());
+                        }
+                    });
+                });
+
+                // Create category objects from unique names
+                const categories = Array.from(uniqueCategoryNames).map(name => ({
+                    name: name
+                }));
+                console.log('[CSV-IMPORT] Categories:', categories);
+
                 console.log('[CSV-IMPORT] Inserting artisans into database...');
                 await Artisan.bulkCreate(artisans);
-                console.log('[CSV-IMPORT] CSV import completed successfully');
+                console.log('[CSV-IMPORT] Inserting categories into database...');
+                await Category.bulkCreate(categories);
+                console.log('[CSV-IMPORT] CSV imported successfully');
             } catch (error) {
                 console.error('[CSV-IMPORT] Database import error:', error.message);
             }
@@ -107,5 +126,6 @@ const importCsvData = async () => {
         console.error('[CSV-IMPORT] General import error:', error.message);
     }
 };
+
 
 module.exports = importCsvData; 

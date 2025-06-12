@@ -138,7 +138,7 @@ export const getArtisans = async () => {
 export const getArtisansByCategory = async (categoryName) => {
     try {
         console.log('[API] Fetching artisans by category:', categoryName);
-        const response = await authenticatedFetch(`${API_BASE_URL}/artisans/categorie/${categoryName}`);
+        const response = await authenticatedFetch(`${API_BASE_URL}/artisans?categorie=${categoryName}`);
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des artisans par catégorie');
         }

@@ -21,7 +21,7 @@ router.get("/", validateToken, (req, res) => {
   }
 
   if (categorie) {
-    condition.categorie = categorie;
+    condition.categories = { name: categorie };
   }
 
   if (ville) {
@@ -43,6 +43,24 @@ router.get("/", validateToken, (req, res) => {
       };
 
       res.status(500).send(errorResponse);
+    });
+});
+
+
+router.get("/top", validateToken, (req, res) => {
+  console.log('[CONTROLLER] findAllTop called');
+
+  Artisan.findAll({ where: { top: true } })
+    .then(data => {
+      console.log('[CONTROLLER] Found', data.length, 'top artisans');
+      res.send(data);
+    })
+    .catch(err => {
+      console.error('[CONTROLLER] Error finding top artisans:', err.message);
+      res.status(500).send({
+        message:
+          err.message || "Une erreur s'est produite lors de la récupération des artisans mis en avant."
+      });
     });
 });
 
@@ -70,23 +88,6 @@ router.get("/:id", validateToken, (req, res) => {
     });
 });
 
-
-router.get("/top", validateToken, (req, res) => {
-  console.log('[CONTROLLER] findAllTop called');
-
-  Artisan.findAll({ where: { top: true } })
-    .then(data => {
-      console.log('[CONTROLLER] Found', data.length, 'top artisans');
-      res.send(data);
-    })
-    .catch(err => {
-      console.error('[CONTROLLER] Error finding top artisans:', err.message);
-      res.status(500).send({
-        message:
-          err.message || "Une erreur s'est produite lors de la récupération des artisans mis en avant."
-      });
-    });
-});
 
 
 module.exports = router;
