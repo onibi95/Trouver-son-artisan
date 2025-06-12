@@ -72,15 +72,19 @@ const ArtisansPage = () => {
     // Obtenir la liste unique des villes
     const villes = [...new Set(artisans.map(artisan => artisan.ville))].sort();
 
+
+
     // Filtrer les artisans
     const filteredArtisans = artisans.filter(artisan => {
+        console.log('[ARTISANS-PAGE] Filtering artisans:', searchTerm, selectedCategory, selectedVille);
+        console.log('[ARTISANS-PAGE] Artisans:', artisan);
         const matchesSearch = searchTerm === '' ||
         
             artisan.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
             artisan.specialite.toLowerCase().includes(searchTerm.toLowerCase());
 
         const matchesCategory = selectedCategory === '' ||
-            artisan.categorie === selectedCategory;
+            artisan.category.name === selectedCategory;
 
         const matchesVille = selectedVille === '' ||
             artisan.ville === selectedVille;
@@ -155,7 +159,7 @@ const ArtisansPage = () => {
                                             onChange={(e) => setSelectedCategory(e.target.value)}
                                             disabled={!!nom} // Désactiver si on est sur une page de catégorie
                                         >
-                                            <option value="">Toutes les catégories</option>
+                                            <option value="">{ !!nom ? nom : "Toutes les catégories"}</option>
                                             {categories.map(category => (
                                                 <option key={category.id} value={category.name}>
                                                     {category.name}
