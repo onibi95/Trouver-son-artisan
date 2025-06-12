@@ -5,83 +5,63 @@ const Op = db.Sequelize.Op;
 
 // Récupérer tous les artisans de la base de données
 exports.findAll = (req, res) => {
-    console.log('=== findAll function called ===');
-    console.log('Request method:', req.method);
-    console.log('Request URL:', req.url);
-    console.log('Request query params:', req.query);
+    console.log('[CONTROLLER] findAll called with params:', req.query);
     
     const nom = req.query.nom;
     const categorie = req.query.categorie;
     const ville = req.query.ville;
 
-    console.log('Extracted parameters:');
-    console.log('- nom:', nom);
-    console.log('- categorie:', categorie);
-    console.log('- ville:', ville);
-
     let condition = {};
-    console.log('Initial condition object:', condition);
 
     if (nom) {
         condition.nom = { [Op.like]: `%${nom}%` };
-        console.log('Added nom condition:', condition.nom);
     }
 
     if (categorie) {
         condition.categorie = categorie;
-        console.log('Added categorie condition:', condition.categorie);
     }
 
     if (ville) {
         condition.ville = ville;
-        console.log('Added ville condition:', condition.ville);
     }
 
-    console.log('Final condition object:', JSON.stringify(condition, null, 2));
-    console.log('About to execute Artisan.findAll with condition...');
+    console.log('[CONTROLLER] Executing findAll with condition:', condition);
 
     Artisan.findAll({ where: condition })
         .then(data => {
-            console.log('Database query successful!');
-            console.log('Number of artisans found:', data.length);
-            console.log('First few results:', data.slice(0, 3));
-            console.log('Sending response to client...');
+            console.log('[CONTROLLER] Found', data.length, 'artisans');
             res.send(data);
-            console.log('Response sent successfully');
         })
         .catch(err => {
-            console.error('=== DATABASE ERROR ===');
-            console.error('Error message:', err.message);
-            console.error('Full error object:', err);
-            console.error('Stack trace:', err.stack);
+            console.error('[CONTROLLER] Database error:', err.message);
             
             const errorResponse = {
                 message: err.message || "Une erreur s'est produite lors de la récupération des artisans."
             };
             
-            console.log('Sending error response:', errorResponse);
             res.status(500).send(errorResponse);
-            console.log('Error response sent');
         });
-    
-    console.log('=== findAll function execution completed ===');
 };
 
 // Trouver un seul artisan avec un id
 exports.findOne = (req, res) => {
     const id = req.params.id;
+    console.log('[CONTROLLER] findOne called for id:', id);
 
     Artisan.findByPk(id)
         .then(data => {
             if (data) {
+                console.log('[CONTROLLER] Artisan found');
                 res.send(data);
             } else {
+                console.log('[CONTROLLER] Artisan not found for id:', id);
                 res.status(404).send({
                     message: `Impossible de trouver l'artisan avec l'id=${id}.`
                 });
             }
         })
         .catch(err => {
+            console.error('[CONTROLLER] Error finding artisan:', err.message);
             res.status(500).send({
                 message: "Erreur lors de la récupération de l'artisan avec l'id=" + id
             });
@@ -91,11 +71,15 @@ exports.findOne = (req, res) => {
 
 // Trouver tous les artisans mis en avant (top)
 exports.findAllTop = (req, res) => {
+    console.log('[CONTROLLER] findAllTop called');
+    
     Artisan.findAll({ where: { top: true } })
         .then(data => {
+            console.log('[CONTROLLER] Found', data.length, 'top artisans');
             res.send(data);
         })
         .catch(err => {
+            console.error('[CONTROLLER] Error finding top artisans:', err.message);
             res.status(500).send({
                 message:
                     err.message || "Une erreur s'est produite lors de la récupération des artisans mis en avant."
@@ -106,12 +90,15 @@ exports.findAllTop = (req, res) => {
 // Trouver tous les artisans par catégorie
 exports.findByCategorie = (req, res) => {
     const categorie = req.params.categorie;
+    console.log('[CONTROLLER] findByCategorie called for:', categorie);
 
     Artisan.findAll({ where: { categorie: categorie } })
         .then(data => {
+            console.log('[CONTROLLER] Found', data.length, 'artisans in category:', categorie);
             res.send(data);
         })
         .catch(err => {
+            console.error('[CONTROLLER] Error finding artisans by category:', err.message);
             res.status(500).send({
                 message:
                     err.message || `Une erreur s'est produite lors de la récupération des artisans de la catégorie ${categorie}.`

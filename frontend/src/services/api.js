@@ -195,10 +195,13 @@ export const searchArtisansByName = async (searchTerm) => {
 export const getCategories = async () => {
     try {
         const response = await authenticatedFetch(`${API_BASE_URL}/categories`);
+        const res = await response.json();
+        console.log("response");
+        console.log(res);
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des catégories');
         }
-        return await response.json();
+        return res;
     } catch (error) {
         console.error('Erreur getCategories:', error);
         // Fallback sur les données mock

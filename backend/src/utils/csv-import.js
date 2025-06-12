@@ -19,14 +19,16 @@ const parseBoolean = (value) => {
 // Importer les données CSV
 const importCsvData = async () => {
     try {
+        console.log('[CSV-IMPORT] Starting CSV data import...');
         const csvFilePath = path.resolve(__dirname, '../../../data/data.csv');
 
         // Vérifier si le fichier existe
         if (!fs.existsSync(csvFilePath)) {
-            console.error(`Le fichier CSV n'existe pas: ${csvFilePath}`);
+            console.error(`[CSV-IMPORT] CSV file not found: ${csvFilePath}`);
             return;
         }
 
+        console.log('[CSV-IMPORT] Reading CSV file:', csvFilePath);
         // Lire le fichier CSV
         const fileContent = fs.readFileSync(csvFilePath, { encoding: 'utf-8' });
 
@@ -38,14 +40,14 @@ const importCsvData = async () => {
             skip_empty_lines: true
         }, async (err, records) => {
             if (err) {
-                console.error('Erreur lors du parsing du CSV:', err);
+                console.error('[CSV-IMPORT] CSV parsing error:', err.message);
                 return;
             }
 
-            console.log(`${records.length} artisans trouvés dans le CSV.`);
-
+            console.log(`[CSV-IMPORT] Found ${records.length} artisans in CSV`);
 
             try {
+                console.log('[CSV-IMPORT] Clearing existing data...');
                 // Supprimer toutes les données existantes
                 await Artisan.destroy({ truncate: true, cascade: true });
 
@@ -90,23 +92,19 @@ const importCsvData = async () => {
                               break;
                         }
                     });
-
-
                     
                     return artisan;
                 });
 
-
-
-
+                console.log('[CSV-IMPORT] Inserting artisans into database...');
                 await Artisan.bulkCreate(artisans);
-                console.log('Importation CSV terminée avec succès.');
+                console.log('[CSV-IMPORT] CSV import completed successfully');
             } catch (error) {
-                console.error('Erreur lors de l\'importation en base de données:', error);
+                console.error('[CSV-IMPORT] Database import error:', error.message);
             }
         });
     } catch (error) {
-        console.error('Erreur lors de l\'importation du CSV:', error);
+        console.error('[CSV-IMPORT] General import error:', error.message);
     }
 };
 

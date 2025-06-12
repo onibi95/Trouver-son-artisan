@@ -33,7 +33,7 @@ const Footer = () => {
                         <h5 className="mb-3">Catégories</h5>
                         <ul className="list-unstyled">
                             <li className="mb-2"><a href="/categorie/alimentation" className="text-decoration-none text-white-50">Alimentation</a></li>
-                            <li className="mb-2"><a href="/categorie/batiment" className="text-decoration-none text-white-50">Bâtiment</a></li>
+                            <li className="mb-2"><a href="/categorie/batiment" className="text-decoration-none text-white-50">Bfffâtiment</a></li>
                             <li className="mb-2"><a href="/categorie/fabrication" className="text-decoration-none text-white-50">Fabrication</a></li>
                             <li className="mb-2"><a href="/categorie/services" className="text-decoration-none text-white-50">Services</a></li>
                         </ul>
