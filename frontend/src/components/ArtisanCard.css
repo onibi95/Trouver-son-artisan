@@ -15,11 +15,6 @@
     transition: all 0.2s ease;
 }
 
-.card:hover .btn-outline-primary {
-    background-color: #0074c7;
-    color: white;
-}
-
 .text-warning {
     color: #cd2c2e !important;
 }

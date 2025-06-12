@@ -56,13 +56,15 @@ router.post("/", validateToken, async (req, res) => {
             errors: validationErrors
         });
     }
+
+   
     const artisan = await db.artisans.findOne({where: {id: req.body.artisanId}});
       const info = await transporter.sendMail({
         from: '"Artisans Auvergne Rhône-Alpes" <artisans@artisans-auvergne-rhone-alpes.fr>',
-        to: "bar@example.com, baz@example.com",
-        subject: "Hello ✔",
-        text: "Hello world?", 
-        html: "<b>Hello world?</b>", // HTML body
+        to: artisan.email,
+        subject: "Nouveau message",
+        text: `Nom: ${req.body.nom}\nEmail: ${req.body.email}\nObjet: ${req.body.objet}\nMessage: ${req.body.message}`, 
+        html: `<p>Nom: ${req.body.nom}</p><p>Email: ${req.body.email}</p><p>Objet: ${req.body.objet}</p><p>Message: ${req.body.message}</p>`, // HTML body
       });
       console.log("Message sent:", info);
 

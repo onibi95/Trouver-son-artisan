@@ -6,19 +6,18 @@ const Footer = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-        try {
-          console.log("[FOOTER] fetchCategories");
-            const data = await getCategories();
-            setCategories(data);
-            
-        } catch (error) {
-            console.error("Erreur lors de la récupération des catégories:", error);
-        }
+      try {
+        console.log("[FOOTER] fetchCategories");
+        const data = await getCategories();
+        setCategories(data);
+
+      } catch (error) {
+        console.error("Erreur lors de la récupération des catégories:", error);
+      }
     };
 
-
     fetchCategories();
-}, []);
+  }, []);
 
   return (
     <footer className="bg-secondary-transparent text-white py-4 mt-5">
