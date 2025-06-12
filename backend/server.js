@@ -5,6 +5,7 @@ const db = require("./src/models");
 const artisanController = require('./src/controllers/artisan.controller');
 const categoryController = require('./src/controllers/category.controller');
 const { authRouter } = require('./src/controllers/authentification');
+const emailController = require('./src/controllers/email.controller');
 
 // Load environment variables
 dotenv.config();
@@ -19,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/artisans', artisanController);
 app.use('/api/categories', categoryController);
 app.use('/api/auth', authRouter);
-
+app.use('/api/email', emailController);
 
 // Routes
 app.get('/', (req, res) => {

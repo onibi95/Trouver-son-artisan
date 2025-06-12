@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getArtisans } from '../services/api';
 import SEO from '../components/SEO';
+import { sendEmail } from '../services/api';
 
 const ArtisanDetailPage = () => {
     const { id } = useParams();
@@ -57,6 +58,15 @@ const ArtisanDetailPage = () => {
             objet: '',
             message: ''
         });
+    };
+
+    const submitForm = async   () => {
+        console.log("Email envoyé");
+        console.log(formData);
+        console.log(artisan.id);
+        const response = await sendEmail(formData, artisan.id);
+        console.log(response);
+
     };
 
     // Fonction pour générer les étoiles en fonction de la note
@@ -244,7 +254,7 @@ const ArtisanDetailPage = () => {
                                                 required
                                             ></textarea>
                                         </div>
-                                        <button type="submit" className="btn btn-primary w-100">
+                                        <button type="submit" className="btn btn-primary w-100" onClick={submitForm}>
                                             Envoyer
                                         </button>
                                     </form>

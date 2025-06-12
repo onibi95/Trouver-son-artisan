@@ -3,6 +3,7 @@ const { validateToken } = require("../controllers/authentification.js");
 const db = require("../models");
 
 const Artisan = db.artisans;
+const Category = db.categories;
 const Op = db.Sequelize.Op;
 
 router.get("/", validateToken, (req, res) => {
@@ -15,13 +16,14 @@ router.get("/", validateToken, (req, res) => {
   const ville = req.query.ville;
 
   let condition = {};
+  let categoryCondition = {};
 
   if (nom) {
     condition.nom = { [Op.like]: `%${nom}%` };
   }
 
   if (categorie) {
-    condition.categories = { name: categorie };
+    categoryCondition.name = categorie;
   }
 
   if (ville) {
@@ -30,7 +32,14 @@ router.get("/", validateToken, (req, res) => {
 
   console.log('[CONTROLLER] Executing findAll with condition:', condition);
 
-  Artisan.findAll({ where: condition })
+  Artisan.findAll({ 
+    where: condition,
+    include: [{
+      model: Category,
+      as: 'category',
+      where: Object.keys(categoryCondition).length ? categoryCondition : undefined
+    }]
+  })
     .then(data => {
       console.log('[CONTROLLER] Found', data.length, 'artisans');
       res.send(data);
